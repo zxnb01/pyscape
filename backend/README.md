@@ -1,128 +1,109 @@
-# PyScape Backend - Code Execution API
+# Backend Directory
 
-This backend provides a secure API for executing Python and JavaScript code in a sandboxed environment.
+Express.js backend API for PyScape-Basic.
 
-## Features
+## Structure
 
-- ✅ Code execution for Python and JavaScript
-- ✅ Sandboxed execution with timeouts
-- ✅ CORS support for React frontend
-- ✅ Error handling and security measures
-- ✅ Temporary file management
+```
+backend/
+├── src/
+│   ├── routes/          # API routes and WebSocket handlers
+│   ├── middleware/      # Express middleware
+│   ├── services/        # Business logic
+│   ├── models/          # Database models
+│   ├── config/          # Configuration
+│   └── utils/           # Helper functions
+├── server.js            # REST API entry point (port 5000)
+├── duel-server.js       # WebSocket server entry point (port 8080)
+├── package.json
+└── .env.example
+```
 
-## Setup Instructions
-
-### 1. Install Dependencies
-
-Navigate to the backend directory and install dependencies:
+## Running
 
 ```bash
-cd backend
-npm install
+npm install         # Install dependencies
+npm run dev         # Start REST API server (http://localhost:5000)
+npm run dev:duel    # Start WebSocket server (ws://localhost:8080)
+npm start           # Production mode
+npm test            # Run tests
 ```
 
-### 2. Install Required Runtimes
+## Architecture
 
-Make sure you have Python and Node.js installed on your system:
+- **Routes** — REST API endpoints and WebSocket event handlers
+- **Services** — Business logic (code execution, matchmaking, gamification)
+- **Models** — Database model definitions
+- **Middleware** — Auth, CORS, error handling
+- **Config** — Database, API keys, environment variables
 
-- **Python**: Download from [python.org](https://python.org) (3.8+ recommended)
-- **Node.js**: Already installed (for JavaScript execution)
+### REST API Routes
 
-### 3. Start the Server
-
-```bash
-# Development mode (with auto-restart)
-npm run dev
-
-# Production mode
-npm start
+```
+/api/auth/*         — Authentication (login, signup, logout)
+/api/problems/*     — Problem listing and fetching
+/api/submissions/*  — Code submission and results
+/api/users/*        — User profiles and stats
+/api/duel/*         — Duel statistics and leaderboard
+/api/roadmap/*      — Learning path generation
+/api/portfolio/*    — Portfolio data and export
 ```
 
-The server will start on `http://localhost:5000`
+### WebSocket Events
 
-### 4. Test the API
+Real-time events for code duels and chat:
 
-Test the health endpoint:
-```bash
-curl http://localhost:5000/api/health
+```
+join-queue          — Enter matchmaking
+match-found         — Opponent matched, duel starting
+code-submit         — Submit code for execution
+code-result         — Submission result
+opponent-progress   — Opponent's test pass count
+duel-complete       — Duel finished
+send-message        — Chat message to opponent
 ```
 
-Test code execution:
-```bash
-curl -X POST http://localhost:5000/api/run \
-  -H "Content-Type: application/json" \
-  -d '{"code": "print(\"Hello World!\")", "language": "python"}'
+## Configuration
+
+Create `.env` file with:
+
+```env
+# Supabase
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your-service-key
+
+# Judge0 API (code execution)
+JUDGE0_API_HOST=https://judge0-ce.p.rapidapi.com
+JUDGE0_API_KEY=your-rapidapi-key
+
+# Server
+BACKEND_PORT=5000
+WS_PORT=8080
+NODE_ENV=development
 ```
 
-## API Endpoints
+## Key Technologies
 
-### POST /api/run
+- **Express.js** — Web framework
+- **ws** — WebSocket library
+- **@supabase/supabase-js** — Supabase client
+- **axios** — HTTP client
+- **helmet** — Security headers
+- **cors** — CORS middleware
 
-Execute code in a sandboxed environment.
+## Development
 
-**Request Body:**
-```json
-{
-  "code": "print('Hello World!')",
-  "language": "python"
-}
-```
+See [../docs/DEVELOPMENT.md](../docs/DEVELOPMENT.md) for:
+- Complete setup guide
+- Running servers
+- Adding API endpoints
+- Testing
 
-**Response:**
-```json
-{
-  "stdout": "Hello World!\n",
-  "stderr": "",
-  "exitCode": 0,
-  "error": null
-}
-```
+See [../docs/API.md](../docs/API.md) for:
+- REST API reference
+- WebSocket event reference
+- Request/response formats
 
-### GET /api/health
+---
 
-Health check endpoint.
-
-**Response:**
-```json
-{
-  "status": "OK",
-  "timestamp": "2024-01-01T12:00:00.000Z"
-}
-```
-
-## Supported Languages
-
-- **Python** (`.py`)
-- **JavaScript** (`.js`)
-
-## Security Features
-
-- Execution timeout (10 seconds default)
-- Temporary file cleanup
-- CORS protection
-- Input validation
-- Process isolation
-
-## Environment Variables
-
-Copy `.env.example` to `.env` and customize:
-
-```bash
-cp .env.example .env
-```
-
-## Troubleshooting
-
-1. **Port already in use**: Change PORT in `.env` file
-2. **Python not found**: Ensure Python is in your system PATH
-3. **CORS errors**: Check the frontend URL in server.js
-4. **Timeout errors**: Increase MAX_EXECUTION_TIME in `.env`
-
-## Production Deployment
-
-For production, consider:
-- Using Docker containers for better isolation
-- Implementing rate limiting
-- Adding authentication
-- Using a process manager like PM2
-- Setting up proper logging
+Start building! 🚀
