@@ -382,7 +382,7 @@ Built with:
 - **Documentation:** See [docs/](docs/)
 - **Issues:** [GitHub Issues](https://github.com/yourusername/pyscape-basic/issues)
 - **Discussions:** [GitHub Discussions](https://github.com/yourusername/pyscape-basic/discussions)
-- **Email:** support@pyscape.dev
+- **Email:** connect @zxnb01
 
 ---
 
