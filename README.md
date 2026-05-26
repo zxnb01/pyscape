@@ -17,8 +17,8 @@ PyScape-Basic is a **clean, foundational implementation** of the PyScape adaptiv
 ✅ Prioritizes educational clarity over complex orchestration  
 
 ### Looking for something else?
-- **Multi-agent orchestration?** → See [pyscape-multi-agent](https://github.com/yourusername/pyscape-multi-agent)
-- **Research benchmarks?** → See [pyscape-research](https://github.com/yourusername/pyscape-research)
+- **Multi-agent orchestration?** → See [pyscape-multi-agent](https://github.com/zxnb01/pyscape-multi-agent)
+- **Research benchmarks?** → See [pyscape-research](https://github.com/zxnb01/pyscape-research)
 
 ---
 
